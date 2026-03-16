@@ -16,7 +16,7 @@ const Input: React.FC<IProps> = ({width, height, placeholder="", formType = "tex
 
     const styleDefault: React.CSSProperties = {
         backgroundColor: color === "blue" ? 'var(--brand-color)' : "gray",
-        width: width || '100px',
+        width: width || '100%',
         height: height || '30px',
         borderRadius: '10px',
         color: "white",
@@ -26,7 +26,7 @@ const Input: React.FC<IProps> = ({width, height, placeholder="", formType = "tex
 
     const styleUnderline: React.CSSProperties = {
         backgroundColor: 'transparent',
-        width: width || '100px',
+        width: width || '100%',
         height: height || '30px',
         borderRadius: '10px',
         padding: '10px',

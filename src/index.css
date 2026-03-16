@@ -142,7 +142,8 @@ a {
 
 .Page{
     width: 505px;
-    margin-bottom: 70px;
+    padding-bottom: 80px;
+    /*margin-bottom: 70px;*/
     /*display: flex;*/
     /*flex-direction: column;*/
     /*gap: 10px 0;*/

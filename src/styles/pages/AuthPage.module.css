@@ -1,54 +1,48 @@
-.container{
-    width: 100%;
-    height: 90vh;
+.container {
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-
-
-
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-.content{
+.content {
     display: flex;
     flex-direction: column;
     text-align: center;
-    gap: 20px;
-
+    gap: 24px;
     width: 100%;
-    max-width: 420px;   /* добавить */
-
+    max-width: 420px;
     padding: 40px;
-    background: var(--main-color);
+    background: var(--main-color, #fff);
     border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.2);
-}
-
-.content h2{
-    font-size: 2rem;
-    font-weight: bold;
-}
-
-.content form{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 
 .inputs{
-
-    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 
-.changeAction{
-    color: var(--brand-color);
+@media (max-width: 505px) {
+    .content {
+        width: 100%;
+        padding: 30px 20px;
+        height: auto;
+    }
+}
+
+.changeAction {
+    background: none;
+    border: none;
+    color: var(--brand-color, blue);
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0;
+    font-size: inherit;
+    text-decoration: underline;
     margin-left: 5px;
 }

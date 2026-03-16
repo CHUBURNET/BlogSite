@@ -29,6 +29,7 @@ const Message: React.FC<Props> = ({images, text, likes, dislikes, isLiked = fals
             <div className={style.MessageReactionsContainer}>
                 <div
                     style={{
+                        textAlign: "left",
                         background: isLiked ? "var(--brand-color)" : "var(--page-background)",
                         color: isLiked ? "var(--main-color)" : "var(--text-color)",
                         padding: "5px",
@@ -53,6 +54,7 @@ const Message: React.FC<Props> = ({images, text, likes, dislikes, isLiked = fals
                 </div>
                 <div
                     style={{
+                        textAlign: "right",
                         background: isDisliked ? "var(--brand-color)" : "var(--page-background)",
                         color: isDisliked ? "var(--main-color)" : "var(--text-color)",
                         padding: "5px",

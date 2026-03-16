@@ -103,6 +103,11 @@ input[type='file'] {
     --brand-color: #1573FE;
 }
 
+html {
+    scrollbar-gutter: stable;
+}
+
+
 body{
     background: var(--page-background);
     color: var(--text-color);

@@ -11,6 +11,8 @@ interface IProps {
     formType?: "button" | "submit" | "reset"
 }
 
+// awdwa
+
 const Button: React.FC<IProps> = ({
                                       formType = "button",
                                       variant = "default",

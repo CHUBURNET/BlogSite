@@ -1,5 +1,5 @@
 .MessageContainer{
-    width: 500px;
+    /*width: 505px;*/
     background: var(--main-color);
 }
 
@@ -8,13 +8,13 @@
 }
 
 .MessageReactionsContainer{
-    margin: 10px;
     display: flex;
     align-items: center;
     /*justify-content: space-between;*/
     background: var(--page-background);
-    width: 100px;
+    width: 120px;
     border-radius: 25px;
+    margin: 5px;
 
 }
 

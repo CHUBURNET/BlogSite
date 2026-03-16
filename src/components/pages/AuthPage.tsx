@@ -4,72 +4,67 @@ import Button from "../UI/Button.tsx";
 import Input from "../UI/Input.tsx";
 
 const AuthPage: React.FC = () => {
+    const [action, setAction] = useState(true);
 
-    const [action, setAction] = useState(true)
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Логика отправки данных
+        console.log("Submit form");
+    };
 
     return (
-        <div className={"Page"}>
+        <div className="Page">
             <div className={style.container}>
                 <div className={style.content}>
                     <h2>{action ? "Вход" : "Регистрация"}</h2>
-                    <form>
+
+                    <form onSubmit={handleSubmit}>
                         <div className={style.inputs}>
                             <Input
                                 placeholder={action ? "Имя пользователя или Email" : "Имя пользователя"}
-                                formType={"text"}
-                                color={"blue"}
-                                style={{width:'100%'}}
+                                formType="text"
+                                style={{ width: '100%' }}
                             />
-                            {!action &&
+                            {!action && (
                                 <Input
-                                    placeholder={"email"}
-                                    formType={"text"}
-                                    color={"blue"}
-                                    style={{width:'100%'}}
+                                    placeholder="Email"
+                                    formType="email"
+                                    style={{ width: '100%' }}
                                 />
-                            }
+                            )}
                             <Input
-                                placeholder={"Пароль"}
-                                formType={"password"}
-                                color={"blue"}
-                                style={{width:'100%'}}
+                                placeholder="Пароль"
+                                formType="password"
+                                style={{ width: '100%' }}
                             />
-                            {!action &&
+                            {!action && (
                                 <Input
-                                    placeholder={"Повторите пароль"}
-                                    formType={"password"}
-                                    color={"blue"}
-                                    style={{width:'100%'}}
+                                    placeholder="Повторите пароль"
+                                    formType="password"
+                                    style={{ width: '100%' }}
                                 />
-                            }
+                            )}
                         </div>
+
                         <Button
-                            formType={"submit"}
-                            onClick={() => {}}
+                            formType="submit"
                             text={action ? "Войти" : "Зарегистрироваться"}
-                            style={{width:'100%'}}
-                            height={"33px"}
-                            color={"blue"}
-                            // type={"underline"}
+                            style={{ width: '100%', marginTop: '10px' }}
+                            height="40px"
+                            color="blue"
                         />
                     </form>
-                    {action ?
-                        <span>
-                            Нет аккаунта?
-                            <button
-                                className={style.changeAction}
-                                onClick={() => {setAction(false)}}
-                            >Зарегистрироваться</button>
-                        </span>
-                        :
-                        <span>
-                            Уже есть аккаунт?
-                            <button
-                                className={style.changeAction}
-                                onClick={() => {setAction(true)}}
-                            >Войти</button>
-                        </span>
-                    }
+
+                    <div>
+                        <span>{action ? "Нет аккаунта?" : "Уже есть аккаунт?"}</span>
+                        <button
+                            type="button"
+                            className={style.changeAction}
+                            onClick={() => setAction(!action)}
+                        >
+                            {action ? "Зарегистрироваться" : "Войти"}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

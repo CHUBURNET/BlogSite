@@ -1,0 +1,68 @@
+.footer{
+    width: 500px;
+    height: 50px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: var(--main-color);
+    /*left: 31%;*/
+}
+
+
+.buttonsContainer{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.buttonHome{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: initial;
+    bottom: 2px;
+    margin-bottom: 10px;
+}
+
+.linksList{
+    /*width: 100px;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.buttonHome button{
+    padding: 10px;
+    background: var(--main-color);
+    margin-bottom: 10px;
+    -webkit-box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+
+    && img{
+        width: 35px;
+    }
+}
+
+.buttonLink{
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 10px;
+    && img{
+        margin: 0 auto;
+        width: 30px;
+    }
+}
+
+@media (max-width: 505px) {
+    .footer{
+        width: 100%;
+    }
+}

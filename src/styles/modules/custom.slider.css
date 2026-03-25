@@ -24,11 +24,13 @@
 }
 
 .slider__btn-next {
+    -webkit-text-stroke: 0.5px var(--text-color);
     position: absolute;
     right: 0;
 }
 
 .slider__btn-prev {
+    -webkit-text-stroke: 0.5px var(--text-color);
     position: absolute;
     left: 0;
 }
@@ -41,21 +43,20 @@
 }
 
 .container__slider__links-small {
+    border: 1px solid var(--brand-color);
     position: relative;
     width: 8px;
     height: 8px;
     padding: 0;
     border-radius: 50%;
     outline: none;
-    border: 0;
     background-color: white;
-    border: 1px solid grey;
     transition: background-color 1s ease;
     margin: 0 2px;
 }
 
 .container__slider__links-small-active {
-    background-color: black;
+    background-color: var(--brand-color);
 }
 
 .slider__item {

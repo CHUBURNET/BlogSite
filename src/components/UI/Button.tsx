@@ -11,8 +11,6 @@ interface IProps {
     formType?: "button" | "submit" | "reset"
 }
 
-// awdwa
-
 const Button: React.FC<IProps> = ({
                                       formType = "button",
                                       variant = "default",
@@ -21,7 +19,7 @@ const Button: React.FC<IProps> = ({
                                       height,
                                       style,
                                       color = "gray",
-                                      onClick = () => console.log("click")
+                                      onClick
                                   }) => {
 
     const styleDefault: React.CSSProperties = {

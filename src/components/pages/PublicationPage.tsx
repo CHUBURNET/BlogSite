@@ -4,6 +4,7 @@ import {axiosInstance} from "../../utils/api.ts";
 import Button from "../UI/Button.tsx";
 import type {INewPost} from "../../types/postType.ts";
 import UploadImages from "../UI/UploadImages.tsx";
+import axios from "axios";
 
 const PublicationPage: React.FC = () => {
 
@@ -24,14 +25,15 @@ const PublicationPage: React.FC = () => {
         }
 
         try {
-            const {data} = await axiosInstance.post("post/publish", formData, {
+            await axiosInstance.post("post/publish", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log(data)
         } catch (e) {
-            console.log(e)
+            if (axios.isAxiosError(e)){
+                console.error(e)
+            }
         }
     }
 

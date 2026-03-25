@@ -8,6 +8,7 @@ import {axiosInstance} from "../../utils/api.ts";
 import {useNavigate} from "react-router-dom";
 import {clearUser} from "../../redux/slices/userSlice.ts";
 import type {RootState} from "../../redux/store.ts";
+import axios from "axios";
 
 interface INewPassword {
     oldPassword: string,
@@ -28,33 +29,32 @@ const ProfilePage: React.FC = () => {
 
     async function logout(): Promise<void> {
         try {
-            const {data} = await axiosInstance.post("user/logout", {
+            await axiosInstance.post("user/logout", {
                 refreshToken: localStorage.getItem("refreshToken"),
             });
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("accessToken");
             dispatch(clearUser());
             navigate("/auth");
-            console.log(data);
         } catch (e) {
-            console.log(e)
+            if (axios.isAxiosError(e)){
+                console.error(e)
+            }
         }
     }
 
     async function changePassword(): Promise<void> {
         if (changePasswordState.newPassword2 !== changePasswordState.newPassword2) {
-            console.log("net")
             return
         }
         try {
-            const {data} = await axiosInstance.post("user/change-password", changePasswordState);
-            console.log(data);
+            await axiosInstance.post("user/change-password", changePasswordState);
         } catch (e) {
-            console.log(e)
+            if (axios.isAxiosError(e)){
+                console.error(e)
+            }
         }
     }
-
-    console.log(changePasswordState)
 
     return (
         <div className={style.page}>

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import style from "../../styles/pages/GalleryPage.module.css";
 import {axiosInstance} from "../../utils/api.ts";
 import type {IGalleryItem} from "../../types/postType.ts";
+import axios from "axios";
 
 const GalleryPage: React.FC = () => {
 
@@ -11,9 +12,10 @@ const GalleryPage: React.FC = () => {
         try {
             const {data} = await axiosInstance.get("/post/images")
             setImages(data.data.items)
-            console.log(data)
         } catch (e) {
-            console.log(e)
+            if (axios.isAxiosError(e)){
+                console.error(e)
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import style from "../../styles/pages/AuthPage.module.css"
 import Button from "../UI/Button.tsx";
 import Input from "../UI/Input.tsx";
@@ -6,6 +6,7 @@ import {axiosInstance} from "../../utils/api.ts";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setUser} from "../../redux/slices/userSlice.ts";
+import axios from "axios";
 
 interface IUser {
     username: string;
@@ -16,6 +17,7 @@ interface IUser {
 
 const AuthPage: React.FC = () => {
     const [action, setAction] = useState<boolean>(true);
+    const [error, setError] = useState<string>("")
     const [userData, setUserData] = useState<IUser>({
         username: "",
         email: "",
@@ -26,39 +28,45 @@ const AuthPage: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    async function handleSubmit (e: React.FormEvent<HTMLFormElement>): Promise<void> {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
         e.preventDefault();
-
-        if (action) {
-            try {
-                const {data} = await axiosInstance.post("/user/login/", {
+        setError("");
+        try {
+            if (action) {
+                const { data } = await axiosInstance.post("/user/login/", {
                     email: userData.email,
                     password: userData.password,
-                    password2: userData.password2,
                     identifier: userData.username,
-                })
+                });
                 dispatch(setUser(data.data.user));
-                localStorage.setItem("refreshToken", data.data.refreshToken)
-                localStorage.setItem("accessToken", data.data.accessToken)
+                localStorage.setItem("refreshToken", data.data.refreshToken);
+                localStorage.setItem("accessToken", data.data.accessToken);
                 navigate("/");
-            } catch (e) {
-                console.log(e)
+            } else {
+                if(userData.password !== userData.password2) {
+                    setError("Пароли не совпадают!");
+                    return;
+                }
+                const { data } = await axiosInstance.post("user/register/", userData);
+                localStorage.setItem("refreshToken", data.data.refreshToken);
+                localStorage.setItem("accessToken", data.data.accessToken);
+                navigate("/me");
             }
-        } else {
-            const {data} = await axiosInstance.post("user/register/", {
-                email: userData.email,
-                password: userData.password,
-                password2: userData.password2,
-                username: userData.username,
-            })
-            localStorage.setItem("refreshToken", data.data.refreshToken)
-            localStorage.setItem("accessToken", data.data.accessToken)
-            navigate("/me");
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                if (err.response?.status === 401) {
+                    setError("Не верный логин или пароль!");
+                    return
+                }
+                setError("Неизвестная ошибка. напишите на почту chuburartem0@gmail.com")
+                console.error(err.response?.status);
+            }
         }
+    }
 
-
-
-    };
+    useEffect(() => {
+        setError("");
+    }, [action]);
 
 
     return (
@@ -66,15 +74,17 @@ const AuthPage: React.FC = () => {
             <div className={style.container}>
                 <div className={style.content}>
                     <h2>{action ? "Вход" : "Регистрация"}</h2>
-
+                    <p className={style.errorMessage}>{error}</p>
                     <form onSubmit={handleSubmit}>
                         <div className={style.inputs}>
                             <Input
+                                // error={Boolean(error === "Не верный логин или пароль!")}
                                 value={userData.username}
                                 name={"username"}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    setError("")
                                     setUserData({...userData, username: e.target.value})
-                                }
+                                }}
                                 placeholder={action ? "Имя пользователя или Email" : "Имя пользователя"}
                                 formType="text"
                                 style={{ width: '100%' }}
@@ -83,16 +93,23 @@ const AuthPage: React.FC = () => {
                                 <Input
                                     value={userData.email}
                                     name={"email"}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserData({...userData, email: e.target.value})}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                        setError("")
+                                        setUserData({...userData, email: e.target.value})
+                                    }}
                                     placeholder="Email"
                                     formType="email"
                                     style={{ width: '100%' }}
                                 />
                             )}
                             <Input
+                                // error={Boolean(error)}
                                 value={userData.password}
                                 name={"password"}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserData({...userData, password: e.target.value})}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    setError("")
+                                    setUserData({...userData, password: e.target.value})
+                                }}
                                 placeholder="Пароль"
                                 formType="password"
                                 style={{ width: '100%' }}
@@ -100,8 +117,11 @@ const AuthPage: React.FC = () => {
                             {!action && (
                                 <Input
                                     value={userData.password2}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserData({...userData, password2: e.target.value})}
-                                    error={userData.password !== userData.password2 && userData.password !== "" && userData.password2 !== ""}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                        setError("")
+                                        setUserData({...userData, password2: e.target.value})
+                                    }}
+                                    // error={userData.password !== userData.password2 && userData.password !== "" && userData.password2 !== ""}
                                     placeholder="Повторите пароль"
                                     formType="password"
                                     style={{ width: '100%' }}
@@ -110,7 +130,6 @@ const AuthPage: React.FC = () => {
                         </div>
 
                         <Button
-                            onClick={() => {}}
                             formType="submit"
                             text={action ? "Войти" : "Зарегистрироваться"}
                             style={{ width: '100%', marginTop: '10px' }}

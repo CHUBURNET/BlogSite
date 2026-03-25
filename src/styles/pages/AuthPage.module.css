@@ -29,6 +29,10 @@
     gap: 5px;
 }
 
+.errorMessage{
+    color: red;
+}
+
 @media (max-width: 505px) {
     .content {
         width: 100%;

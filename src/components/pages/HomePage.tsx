@@ -7,21 +7,27 @@ import {Link} from "react-router-dom";
 import type {IUser} from "../../types/userType.ts";
 import {axiosInstance} from "../../utils/api.ts";
 import type {IPostRender} from "../../types/postType.ts";
+import axios from "axios";
 // import style from "../../styles/pages/HomePage.module.css"
 
 
 const HomePage: React.FC = () => {
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState<IPostRender[]>(() => {
+        const saved = localStorage.getItem("posts");
+        return saved ? JSON.parse(saved) : [];
+    });
     const user: IUser = useSelector((state: RootState) => state.user);
 
     async function getPosts() {
-        console.log("get")
         try {
             const {data} = await axiosInstance.get("post/list?limit=10&page=1");
             setPosts(data.data);
-            console.log(data)
+            localStorage.setItem("posts", JSON.stringify(data.data));
         } catch (e) {
-            console.log(e)
+            if (axios.isAxiosError(e)){
+                console.error(e)
+            }
+
         }
     }
 

@@ -41,7 +41,10 @@ axiosInstance.interceptors.response.use(
             _retry?: boolean;
         };
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        const isAuthRequest = originalRequest.url?.includes('/user/login') ||
+            originalRequest.url?.includes('/user/register');
+
+        if (error.response?.status === 401 && !originalRequest._retry && !isAuthRequest) {
 
             if (isRefreshing) {
                 return new Promise((resolve, reject) => {

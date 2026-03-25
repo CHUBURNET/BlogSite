@@ -6,6 +6,7 @@ import {axiosInstance} from "../../utils/api.ts";
 import type {INewPost} from "../../types/postType.ts";
 import Button from "../UI/Button.tsx";
 import UploadImages from "../UI/UploadImages.tsx";
+import axios from "axios";
 
 interface Props {
     images: string[];
@@ -25,21 +26,22 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
 
     const [isDeleteConfirm, setIsDeleteConfirm] = useState<boolean>(false)
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
-    const [editPostdata, setEditPostdata] = useState<INewPost>({
+    const [editPostData, setEditPostData] = useState<INewPost>({
         text: text,
         images: null,
     })
 
     async function sendReaction(id: number, type: string) {
         try {
-            const {data} = await axiosInstance.post("post/reaction", {
+            await axiosInstance.post("post/reaction", {
                 "postId": id,
                 "type": type
             })
             getPosts()
-            console.log(data)
         } catch (e) {
-            console.log(e)
+            if (axios.isAxiosError(e)){
+                console.error(e)
+            }
         }
     }
     
@@ -47,30 +49,32 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
 
         const formData = new FormData();
 
-        formData.append("text", editPostdata.text);
-        if (editPostdata.images) {
-            Array.from(editPostdata.images).forEach((file) => {
+        formData.append("text", editPostData.text);
+        if (editPostData.images) {
+            Array.from(editPostData.images).forEach((file) => {
                 formData.append("images", file);
             });
         }
 
         try {
-            const {data} = await axiosInstance.put(`post/edit/${id}`, formData)
+            await axiosInstance.put(`post/edit/${id}`, formData)
             setIsEditMode(false)
             getPosts()
-            console.log(data)
         } catch (e) {
-            console.log(e)
+            if (axios.isAxiosError(e)){
+                console.error(e)
+            }
         }
     }
 
     async function deletePost(): Promise<void> {
         try {
-            const {data} = await axiosInstance.delete(`post/${id}`);
-            console.log(data)
+            await axiosInstance.delete(`post/${id}`);
             getPosts()
         } catch (e) {
-            console.log(e)
+            if (axios.isAxiosError(e)){
+                console.error(e)
+            }
         }
     }
 
@@ -122,7 +126,7 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
                     <UploadImages
                         onChange={(e) => {
                             if (e.target.files) {
-                                setEditPostdata({ ...editPostdata, images: e.target.files });
+                                setEditPostData({ ...editPostData, images: e.target.files });
                             }
                         }}
                     />
@@ -140,8 +144,8 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
                     <textarea
                         cols={30}
                         rows={10}
-                        value={editPostdata.text}
-                        onChange={(e) => setEditPostdata({...editPostdata, text: e.target.value})}
+                        value={editPostData.text}
+                        onChange={(e) => setEditPostData({...editPostData, text: e.target.value})}
                     />
                     :
                     <h2>{text}</h2>
@@ -160,8 +164,8 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
                         width: "100%",
                     }}
                 >
-                    <button onClick={() => {
-                        sendReaction(id, "like")
+                    <button onClick={async () => {
+                        await sendReaction(id, "like")
                     }}>
                         <span>👍</span>
                         <span>{likes}</span>
@@ -187,8 +191,8 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
                         width: "100%",
                     }}
                 >
-                    <button onClick={() => {
-                        sendReaction(id, "dislike")
+                    <button onClick={async () => {
+                        await sendReaction(id, "dislike")
                     }}>
                         <span>{dislikes}</span>
                         <span>👎</span>

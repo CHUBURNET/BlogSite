@@ -13,9 +13,11 @@ interface IProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     name?: string,
     value?: string,
+    field?: any,
 }
 
 const Input: React.FC<IProps> = ({
+                                     field,
                                      value,
                                      name,
                                      width,
@@ -54,6 +56,7 @@ const Input: React.FC<IProps> = ({
 
     return (
         <input
+            {...field}
             value={value}
             name={name}
             placeholder={placeholder}

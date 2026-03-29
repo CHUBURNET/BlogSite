@@ -33,6 +33,10 @@
     color: red;
 }
 
+.loadingMessage{
+    color: var(--brand-color);
+}
+
 @media (max-width: 505px) {
     .content {
         width: 100%;

@@ -24,6 +24,11 @@ interface Props {
 
 const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, text, likes, dislikes, isLiked = false, isDisliked = false, getPosts}) => {
 
+    const [dislikeState, setDislikeState] = useState<boolean>(isDisliked);
+    const [likeState, setLikeState] = useState<boolean>(isLiked);
+    const [likeCount, setLikeCount] = useState<number>(Number(likes));
+    const [dislikeCount, setDislikeCount] = useState<number>(Number(dislikes));
+
     const [isDeleteConfirm, setIsDeleteConfirm] = useState<boolean>(false)
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
     const [editPostData, setEditPostData] = useState<INewPost>({
@@ -32,13 +37,43 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
     })
 
     async function sendReaction(id: number, type: string) {
+        if (type === "dislike") {
+            setLikeState(false);
+            if (!dislikeState) {
+                setDislikeState(true);
+                setDislikeCount(dislikeCount + 1);
+                setLikeCount(likeCount - 1);
+            } else {
+                setDislikeState( false);
+                setDislikeCount(dislikeCount - 1);
+            }
+
+        } else if (type === "like") {
+            setDislikeState(false);
+            if (!likeState) {
+                setLikeState(true);
+                setLikeCount(likeCount + 1);
+                setDislikeCount(dislikeCount - 1);
+            } else {
+                setLikeState(false);
+                setLikeCount(likeCount - 1);
+            }
+        }
         try {
-            await axiosInstance.post("post/reaction", {
+            const {data} = await axiosInstance.post("post/reaction", {
                 "postId": id,
                 "type": type
             })
+            console.log(data)
             getPosts()
         } catch (e) {
+            if (type === "dislike") {
+                setDislikeState(false);
+                setDislikeCount(dislikeCount - 1);
+            } else if (type === "like") {
+                setLikeState(false);
+                setLikeCount(likeCount - 1);
+            }
             if (axios.isAxiosError(e)){
                 console.error(e)
             }
@@ -156,8 +191,8 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
                 <div
                     style={{
                         textAlign: "left",
-                        background: isLiked ? "var(--brand-color)" : "var(--page-background)",
-                        color: isLiked ? "var(--main-color)" : "var(--text-color)",
+                        background: likeState ? "var(--brand-color)" : "var(--page-background)",
+                        color: likeState ? "var(--main-color)" : "var(--text-color)",
                         padding: "5px",
                         borderBottomLeftRadius: "25px",
                         borderTopLeftRadius: "25px",
@@ -168,7 +203,7 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
                         await sendReaction(id, "like")
                     }}>
                         <span>👍</span>
-                        <span>{likes}</span>
+                        <span>{likeCount}</span>
                     </button>
                 </div>
                 <div>
@@ -183,8 +218,8 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
                 <div
                     style={{
                         textAlign: "right",
-                        background: isDisliked ? "var(--brand-color)" : "var(--page-background)",
-                        color: isDisliked ? "var(--main-color)" : "var(--text-color)",
+                        background: dislikeState ? "var(--brand-color)" : "var(--page-background)",
+                        color: dislikeState ? "var(--main-color)" : "var(--text-color)",
                         padding: "5px",
                         borderBottomRightRadius: "25px",
                         borderTopRightRadius: "25px",
@@ -194,7 +229,7 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
                     <button onClick={async () => {
                         await sendReaction(id, "dislike")
                     }}>
-                        <span>{dislikes}</span>
+                        <span>{dislikeCount}</span>
                         <span>👎</span>
                     </button>
                 </div>

@@ -34,9 +34,7 @@ const HomePage: React.FC = () => {
 
 
     useEffect(() => {
-        if (!posts.length){
-            getPosts()
-        }
+        getPosts()
     }, [])
 
     return (

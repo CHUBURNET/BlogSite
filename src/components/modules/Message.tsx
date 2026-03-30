@@ -38,27 +38,33 @@ const Message: React.FC<Props> = ({username, isAdmin=false, id, images, author, 
 
     async function sendReaction(id: number, type: string) {
         if (type === "dislike") {
-            setLikeState(false);
-            if (!dislikeState) {
+            if (dislikeState) {
+                setDislikeState(false);
+                setDislikeCount(dislikeCount - 1);
+            } else {
                 setDislikeState(true);
                 setDislikeCount(dislikeCount + 1);
-                setLikeCount(likeCount - 1);
-            } else {
-                setDislikeState( false);
-                setDislikeCount(dislikeCount - 1);
-            }
 
+                if (likeState) {
+                    setLikeState(false);
+                    setLikeCount(likeCount - 1);
+                }
+            }
         } else if (type === "like") {
-            setDislikeState(false);
-            if (!likeState) {
-                setLikeState(true);
-                setLikeCount(likeCount + 1);
-                setDislikeCount(dislikeCount - 1);
-            } else {
+            if (likeState) {
                 setLikeState(false);
                 setLikeCount(likeCount - 1);
+            } else {
+                setLikeState(true);
+                setLikeCount(likeCount + 1);
+
+                if (dislikeState) {
+                    setDislikeState(false);
+                    setDislikeCount(dislikeCount - 1);
+                }
             }
         }
+
         try {
             const {data} = await axiosInstance.post("post/reaction", {
                 "postId": id,

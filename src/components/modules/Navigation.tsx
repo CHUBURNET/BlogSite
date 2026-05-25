@@ -1,21 +1,54 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import style from "../../styles/modules/Navigation.module.css"
 import homeIcon from "../../assets/homeIcon.svg"
 import userIcon from "../../assets/userIcon.svg"
-import okakIcon from "../../assets/secret.png"
-import {Link} from "react-router-dom";
+import galleryIcon from "../../assets/galleryIcon.png"
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {axiosInstance} from "../../utils/api.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {setUser} from "../../redux/slices/userSlice.ts";
+import type {IUser} from "../../types/userType.ts";
+import axios from "axios";
+import type {RootState} from "../../redux/store.ts";
 
 interface IProps {
     username?: string
 }
 
 const Navigation: React.FC<IProps> = ({username}) => {
+    const navigate = useNavigate();
+    const {pathname} = useLocation()
+    const dispatch = useDispatch();
+    const user:IUser = useSelector((state: RootState) => state.user);
+
+    async function getUser(): Promise<void> {
+        try {
+            const {data} = await axiosInstance.get("/user/me")
+            dispatch(setUser(data.data))
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                const status = e.response?.status;
+                if ((status === 401 || status === 403) && pathname === "/me") {
+                    navigate("/");
+                }
+                console.error("Ошибка при получении данных пользователя:", status);
+            }
+        }
+    }
+
+    useEffect(() => {
+        if(localStorage.getItem("refreshToken")){
+            getUser();
+        }
+    }, []);
+
+
     return (
         <footer className={style.footer}>
             <div className={style.buttonsContainer}>
-                <Link to={"/surprise"}>
+                <Link to={"/gallery"}>
                     <div className={style.buttonLink}>
-                        <img style={{width: "30px"}} src={okakIcon} alt=""/>
+                        <img style={{width: "30px"}} src={galleryIcon} alt=""/>
                     </div>
                 </Link>
                 <div className={style.buttonHome}>
@@ -32,10 +65,10 @@ const Navigation: React.FC<IProps> = ({username}) => {
                             <span>{username}</span>
                         </div>
                         :
-                        <Link to="/auth">
+                        <Link to={user.username ? "/me" : "/auth"}>
                             <div className={style.buttonLink}>
                                 <img src={userIcon} alt="user"/>
-                                <span>{username || "Авторизация"}</span>
+                                <span>{user.username || "Авторизация"}</span>
                             </div>
                         </Link>
                     }

@@ -1,0 +1,14 @@
+.container{
+    background: var(--main-color);
+    padding: 10px 10px 100px 10px;
+}
+
+.imageList{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.imageList img{
+    height: 150px;
+}

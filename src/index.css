@@ -154,6 +154,14 @@ a {
     /*gap: 10px 0;*/
 }
 
+.buttonDisabled{
+    cursor: not-allowed;
+
+    &&:hover{
+        scale: 1;
+    }
+}
+
 @media (max-width: 505px) {
     .Page{
         width: 100%;

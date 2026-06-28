@@ -18,7 +18,7 @@ const UserProfile: React.FC<IUserState> = ({user, getUser}) => {
         try {
             const {data} = await axiosInstance.post(`/user/username/${user?.username}/follow`);
             console.log(data);
-            getUser()
+            if (getUser) getUser()
         } catch (e) {
             console.log(e)
         }

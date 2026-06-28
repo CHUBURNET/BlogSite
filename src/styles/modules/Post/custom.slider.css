@@ -65,7 +65,7 @@
     height: auto;
     overflow: hidden;
     object-fit: cover;
-    height: auto;
+    /*height: auto;*/
     transform: translateX(0);
     transition: transform 1s ease;
 }

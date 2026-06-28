@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import style from "../../../styles/modules/Profile/UserProfile.module.css"
 import type {IUser, IUserState} from "../../../types/userType.ts";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Button from "../../UI/Button.tsx";
 import {axiosInstance} from "../../../utils/api.ts";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import type {RootState} from "../../../redux/store.ts";
+import {clearUser} from "../../../redux/slices/userSlice.ts";
 
 // interface IUserProfile {
 //     user: IUser;
@@ -13,6 +14,11 @@ import type {RootState} from "../../../redux/store.ts";
 
 const UserProfile: React.FC<IUserState> = ({user, getUser}) => {
     const userRedux:IUser = useSelector((state: RootState) => state.user);
+
+    const [logOutLoading, setLogOutLoading] = useState(false)
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     async function followUser() {
         try {
@@ -30,6 +36,26 @@ const UserProfile: React.FC<IUserState> = ({user, getUser}) => {
             console.log(data);
         } catch (e) {
             console.log(e)
+        }
+    }
+
+    async function logout(): Promise<void> {
+        setLogOutLoading(true)
+        try {
+            await axiosInstance.post("user/logout", {
+                refreshToken: localStorage.getItem("refreshToken"),
+            });
+
+            localStorage.removeItem("refreshToken");
+            localStorage.removeItem("accessToken");
+
+            dispatch(clearUser());
+            navigate("/auth");
+
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLogOutLoading(false)
         }
     }
 
@@ -65,22 +91,27 @@ const UserProfile: React.FC<IUserState> = ({user, getUser}) => {
                         }
 
                         </>
-                        // <Button
-                        //     width={"100%"}
-                        //     text={userRedux.following.find(u => u.username === user?.username) ? "Отписаться" : "Подписаться"}
-                        //     color="blue"
-                        //     onClick={userRedux.following.find(u => u.username === user?.username) ? unFollowUser : followUser}
-                        // />
                         :
                         <>
                             {userRedux.username &&
-                                <Link to={`/me/settings`}>
+                                <div style={{display: "flex", flexDirection: "column", gap: "7px"}}>
+                                    <Link to={`/me/settings`}>
+                                        <Button
+                                            width={"100%"}
+                                            text={"Редактировать"}
+                                            color="blue"
+                                        />
+                                    </Link>
                                     <Button
-                                        width={"100%"}
-                                        text={"Редактировать"}
-                                        color="blue"
+                                        disabled={logOutLoading}
+                                        onClick={logout}
+                                        text={"Выйти"}
+                                        style={{
+                                            background: "red",
+                                            width: "100%",
+                                        }}
                                     />
-                                </Link>
+                                </div>
                             }
                         </>
 

@@ -1,11 +1,20 @@
 export interface IUser {
-    username: string;
-    email: string;
     id?: number;
+    email: string;
+    username: string;
     isAdmin: boolean;
-    createdAt?: Date;
+    createdAt?: string;
+    following_count: string;
+    post_count: string;
+    following: IFollowing[];
+}
+
+export interface IFollowing {
+    id: number;
+    username: string;
 }
 
 export interface IUserState {
-    user: IUser;
+    user?: IUser;
+    getUser?: () => Promise<void>
 }

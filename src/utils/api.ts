@@ -1,7 +1,8 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://api-social-che-mc.vercel.app',
+    // baseURL: 'https://api-social-che-mc.vercel.app',
+    baseURL: 'http://localhost:3333',
 });
 
 // ====== QUEUE ======
@@ -22,7 +23,6 @@ const processQueue = (error: any, token: string | null = null) => {
     failedQueue = [];
 };
 
-// ====== REQUEST ======
 axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const accessToken = localStorage.getItem('accessToken');
 
@@ -33,7 +33,6 @@ axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     return config;
 });
 
-// ====== RESPONSE ======
 axiosInstance.interceptors.response.use(
     (response) => response,
     async (error: AxiosError) => {

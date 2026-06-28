@@ -1,0 +1,56 @@
+
+
+.commentsMainContainer{
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.form {
+    position: relative;
+}
+
+
+.sendBtn{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 5px;
+    top: 2px;
+}
+
+.input{
+    border: 2px solid var(--brand-color);
+    height: 34px;
+    width: 100%;
+    position: relative;
+    padding: 5px;
+    outline: none;
+    border-radius: 5px;
+}
+
+
+.commentContainer{
+    width: 99%;
+    margin: 15px auto;
+}
+
+.commentHeader{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    && p{
+        font-weight: 500;
+        font-size: 18px;
+    }
+}
+
+.avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.text{
+    margin: 0 50px;
+}

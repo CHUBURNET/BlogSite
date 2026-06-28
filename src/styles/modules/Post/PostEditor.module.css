@@ -1,0 +1,26 @@
+.editImagesList{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    && img{
+        height: 50px;
+    }
+}
+
+.input{
+    border: 2px solid var(--brand-color);
+    height: 34px;
+    width: 100%;
+    position: relative;
+    padding: 5px;
+    outline: none;
+    border-radius: 5px;
+}
+
+.textArea{
+    border: 2px solid var(--brand-color);
+    outline: none;
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px;
+}

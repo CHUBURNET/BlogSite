@@ -1,0 +1,43 @@
+.MessageContainer{
+    position: relative;
+    padding: 10px;
+    /*width: 505px;*/
+    background: var(--main-color);
+}
+
+.MessageText{
+    padding: 5px;
+    font-size: 17px;
+}
+
+.MessageText h2{
+    white-space: pre-wrap;
+}
+
+.hashtags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    color: var(--brand-color);
+    font-size: 14px;
+
+    /*&& span{*/
+    /*    cursor: pointer;*/
+    /*}*/
+}
+
+.commentBtnContainer{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    gap: 3px;
+    && img{
+        width: 30px;
+    }
+}
+
+@media (max-width: 505px) {
+    .MessageContainer{
+        width: 100%;
+    }
+}

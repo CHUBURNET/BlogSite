@@ -1,6 +1,6 @@
 import React, { useState, useEffect, type ReactNode } from "react";
 
-import "../../styles/modules/custom.slider.css";
+import "../../../styles/modules/Post/custom.slider.css";
 
 interface CustomCarouselProps {
     children: ReactNode;

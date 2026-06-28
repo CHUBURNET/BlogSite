@@ -42,17 +42,19 @@ const ProfilePage: React.FC<IUserState> = ({user}) => {
                 padding: "5px"
             }}>
                 {(userRedux.username === username || userState?.username === userRedux.username) &&
-                    <Link to={"/publication"}>
-                        <Button
-                            text={"+"}
-                            color={"blue"}
-                            width={"100%"}
-                            style={{
-                                margin: "10px auto",
-                                fontSize: "24px",
-                            }}
-                        />
-                    </Link>
+                    <>
+                        <Link to={"/publication"}>
+                            <Button
+                                text={"+"}
+                                color={"blue"}
+                                width={"100%"}
+                                style={{
+                                    margin: "10px auto",
+                                    fontSize: "24px",
+                                }}
+                            />
+                        </Link>
+                    </>
 
                 }
             </div>

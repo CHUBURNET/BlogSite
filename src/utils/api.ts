@@ -1,8 +1,8 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://api-social-che-mc.vercel.app',
-    // baseURL: 'http://localhost:3333',
+    // baseURL: 'https://api-social-che-mc.vercel.app',
+    baseURL: 'http://localhost:3333',
 });
 
 // ====== QUEUE ======

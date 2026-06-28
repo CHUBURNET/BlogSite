@@ -8,8 +8,8 @@ import {useDispatch} from "react-redux";
 import type {LoadingState} from "../../../types/utilsType.ts";
 
 interface ILogout {
-    loading: LoadingState;
-    setLoading: React.Dispatch<React.SetStateAction<LoadingState>>;
+    loading?: LoadingState;
+    setLoading?: React.Dispatch<React.SetStateAction<LoadingState>>;
 }
 
 const Logout: React.FC<ILogout> = ({loading, setLoading}) => {
@@ -17,7 +17,7 @@ const Logout: React.FC<ILogout> = ({loading, setLoading}) => {
     const dispatch = useDispatch();
 
     async function logout(): Promise<void> {
-        setLoading("logout");
+        if (setLoading) setLoading("logout");
 
         try {
             await axiosInstance.post("user/logout", {
@@ -33,14 +33,14 @@ const Logout: React.FC<ILogout> = ({loading, setLoading}) => {
         } catch (e) {
             console.error(e);
         } finally {
-            setLoading("idle");
+            if (setLoading) setLoading("idle");
         }
     }
 
     return (
         <div className={style.logoutContainer}>
             <p className={style.loadingMessage}>
-                {loading === "logout" && "Выполняется выход..."}
+                {loading && loading === "logout" && "Выполняется выход..."}
             </p>
 
             <Button

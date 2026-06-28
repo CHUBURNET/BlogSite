@@ -1,0 +1,8 @@
+.authorSection{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    gap: 10px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}

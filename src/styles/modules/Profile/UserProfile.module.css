@@ -1,0 +1,49 @@
+.Container{
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.Avatar{
+    width: 120px;
+
+    && img{
+        border-radius: 50%;
+    }
+}
+
+.profileInfo{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.profileInfo h2{
+    font-size: 30px;
+}
+
+.profileNumbers{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 14px;
+}
+
+@media (max-width: 475px){
+    .Avatar{
+        width: 100px;
+    }
+}
+
+@media (max-width: 395px){
+    .profileInfo h2{
+        font-size: 24px;
+    }
+
+    .profileNumbers{
+        font-size: 12px;
+    }
+}

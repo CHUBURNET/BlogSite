@@ -100,6 +100,7 @@ input[type='file'] {
     --page-background: #f5f5f5;
     --main-color: #fff;
     --text-color: #000000;
+    /*--brand-color: #ff8000; */
     --brand-color: #1573FE;
 }
 
@@ -112,10 +113,11 @@ body{
     background: var(--page-background);
     color: var(--text-color);
     font-family: "Roboto", sans-serif;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    /*width: 100%;*/
+    margin: 0 auto;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: stretch;*/
 }
 
 a {
@@ -146,12 +148,14 @@ a {
 }
 
 .Page{
-    width: 505px;
+    width: 100%;
+    max-width: 505px;
     padding-bottom: 80px;
+    margin: 0 auto;
     /*margin-bottom: 70px;*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*gap: 10px 0;*/
+    display: flex;
+    flex-direction: column;
+    gap: 10px 0;
 }
 
 .buttonDisabled{
@@ -162,8 +166,8 @@ a {
     }
 }
 
-@media (max-width: 505px) {
-    .Page{
-        width: 100%;
-    }
-}
+/*@media (max-width: 535px) {*/
+/*    .Page{*/
+/*        width: 100%;*/
+/*    }*/
+/*}*/

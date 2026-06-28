@@ -44,15 +44,3 @@
         height: auto;
     }
 }
-
-.changeAction {
-    background: none;
-    border: none;
-    color: var(--brand-color, blue);
-    cursor: pointer;
-    font-weight: bold;
-    padding: 0;
-    font-size: inherit;
-    text-decoration: underline;
-    margin-left: 5px;
-}

@@ -1,0 +1,1 @@
+export type LoadingState = "idle" | "changingPassword" | "logout" | "updatingProfile";

@@ -6,7 +6,10 @@ const initialState: IUser = {
     email: "",
     isAdmin: false,
     id: 0,
-    createdAt: new Date()
+    createdAt: "",
+    post_count: "0",
+    following_count: "0",
+    following: [],
 
 };
 
@@ -20,13 +23,19 @@ const userSlice = createSlice({
             state.isAdmin = action.payload.is_admin;
             state.id = action.payload.id;
             state.createdAt = action.payload.created_at;
+            state.post_count = action.payload.post_count;
+            state.following_count = action.payload.following_count;
+            state.following = action.payload.following;
         },
         clearUser(state) {
             state.username = ""
             state.email = ""
             state.isAdmin = false
             state.id = 0
-            state.createdAt = new Date()
+            state.createdAt = ""
+            state.post_count = "0"
+            state.following_count = "0"
+            state.following = []
         }
     },
 });

@@ -3,38 +3,21 @@ import style from "../../styles/modules/Navigation.module.css"
 import homeIcon from "../../assets/homeIcon.svg"
 import userIcon from "../../assets/userIcon.svg"
 import galleryIcon from "../../assets/galleryIcon.png"
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import {axiosInstance} from "../../utils/api.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {setUser} from "../../redux/slices/userSlice.ts";
+import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 import type {IUser} from "../../types/userType.ts";
-import axios from "axios";
 import type {RootState} from "../../redux/store.ts";
 
 interface IProps {
     username?: string
+    getUser: () => Promise<void>
 }
 
-const Navigation: React.FC<IProps> = ({username}) => {
-    const navigate = useNavigate();
-    const {pathname} = useLocation()
-    const dispatch = useDispatch();
+const Navigation: React.FC<IProps> = ({username, getUser}) => {
+
     const user:IUser = useSelector((state: RootState) => state.user);
 
-    async function getUser(): Promise<void> {
-        try {
-            const {data} = await axiosInstance.get("/user/me")
-            dispatch(setUser(data.data))
-        } catch (e) {
-            if (axios.isAxiosError(e)) {
-                const status = e.response?.status;
-                if ((status === 401 || status === 403) && pathname === "/me") {
-                    navigate("/");
-                }
-                console.error("Ошибка при получении данных пользователя:", status);
-            }
-        }
-    }
+
 
     useEffect(() => {
         if(localStorage.getItem("refreshToken")){

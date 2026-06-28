@@ -1,0 +1,10 @@
+.MessageReactionsContainer{
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+    background: var(--page-background);
+    width: 120px;
+    border-radius: 25px;
+    margin: 5px;
+
+}

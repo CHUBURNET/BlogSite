@@ -18,12 +18,6 @@ export interface INewPost {
     hashtags: string[];
 }
 
-export interface IEditPost {
-    text: string;
-    images: FileList | null;
-    hashtags: IComment[];
-}
-
 export interface IPostRender extends Omit<IPost, 'images'> {
     images: string[];
     comments_count: number;

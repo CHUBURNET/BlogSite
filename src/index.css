@@ -2,8 +2,8 @@
 
 /* Reset and base styles  */
 * {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     border: none;
 }
 
@@ -71,8 +71,7 @@ textarea {
 button, input[type="submit"] {
     display: inline-block;
     box-shadow: none;
-    background-color: transparent;
-    background: none;
+    background: transparent none;
     cursor: pointer;
 }
 

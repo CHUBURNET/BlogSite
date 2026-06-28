@@ -6,7 +6,6 @@ import Button from "../../UI/Button.tsx";
 import {axiosInstance} from "../../../utils/api.ts";
 import {useDispatch, useSelector} from "react-redux";
 import type {RootState} from "../../../redux/store.ts";
-import Logout from "../ProfileSettings/Logout.tsx";
 import {clearUser} from "../../../redux/slices/userSlice.ts";
 
 // interface IUserProfile {

@@ -8,20 +8,10 @@
     height: 100vh;
 }
 
-
-
-
-
-
-
-
 .errorMessage{
     color: red;
 }
 
-.loadingMessage{
-    color: var(--brand-color);
-}
 
 
 

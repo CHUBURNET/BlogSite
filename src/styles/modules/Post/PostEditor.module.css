@@ -1,12 +1,3 @@
-.editImagesList{
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    && img{
-        height: 50px;
-    }
-}
-
 .input{
     border: 2px solid var(--brand-color);
     height: 34px;
